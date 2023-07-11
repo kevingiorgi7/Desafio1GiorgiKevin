@@ -14,42 +14,39 @@ class ProductManager {
     addProduct(title, description, price, thumbnail, code, stock){
         // Todas las propiedades del producto que se agrega son obligatorias
         if (!title || !description || !price || !thumbnail || !code || !stock) {
-            console.log('¡ERROR: Debe ingresar todos los campos!');
-        } else {
-            // El CODE del producto que se agrega no se puede repetir
-            const codeExistente = this.products.find(e => e.code === code);
-            // Se crea un ID autoincremental por cada producto agregado, el cual surge de 
-            // agregarle 1 al ultimo elemento del array PRODUCTS
-            if (!codeExistente) {
-                const id = 
-                    this.products.length === 0 
-                        ? 1 
-                        : this.products[this.products.length - 1].id + 1
-                const newProduct = {
-                    id,
-                    title,
-                    description,
-                    price,
-                    thumbnail,
-                    code,
-                    stock
-                }
-                this.products.push(newProduct)
-                console.log(`¡El producto: "${title}", CODE: "${code}" fue agregado exitosamente!`);
-            } else {
-                console.log(`¡ERROR: El CODE "${code}" ya existe!`);
-            }
+            return console.log('¡ERROR: Debe ingresar todos los campos!');
         }
-    }
+        // El CODE del producto que se agrega no se puede repetir
+        const codeExiste = this.products.find(e => e.code === code);
+        // Se crea un ID autoincremental por cada producto agregado, el cual surge de 
+        // agregarle 1 al ultimo elemento del array PRODUCTS
+        if (codeExiste) {
+            return console.log(`¡ERROR: El CODE "${code}" ya existe!`);
+        }
+        const id = 
+            this.products.length === 0 
+                ? 1 
+                : this.products[this.products.length - 1].id + 1
+        const newProduct = {
+            id,
+            title,
+            description,
+            price,
+            thumbnail,
+            code,
+            stock
+        }
+        this.products.push(newProduct)
+        return console.log(`¡El producto: "${title}", CODE: "${code}" fue agregado exitosamente!`);
+        }
 
     // Método para buscar en ID de un producto en particular
     getProductById(idBuscado) {
         const productoBuscado = this.products.find(e => e.id === idBuscado);
-        if (productoBuscado) {
-            console.log(`El ID buscado por el usuario es del producto: `, productoBuscado);
-        } else {
-            console.log(`ERROR: El ID "${idBuscado}" no fue encontrado`);
-        } 
+        if (!productoBuscado) {
+            return console.log(`ERROR: El ID "${idBuscado}" no fue encontrado`);
+        }
+        return console.log(`El ID buscado por el usuario es del producto: `, productoBuscado);
     }
 }
 
